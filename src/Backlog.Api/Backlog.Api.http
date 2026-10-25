@@ -1,0 +1,53 @@
+@Backlog.Api_HostAddress = http://localhost:5080
+
+### Tüm öğeler
+GET {{Backlog.Api_HostAddress}}/items
+
+### Filtreli liste
+GET {{Backlog.Api_HostAddress}}/items?type=Game&status=Backlog&search=disco
+
+### Ertelenmiş öğeler (varsayılan: 90 gün, 10 adet)
+GET {{Backlog.Api_HostAddress}}/items/stale
+
+### Ertelenmiş öğeler (özel eşik ve limit)
+GET {{Backlog.Api_HostAddress}}/items/stale?days=30&limit=5
+
+### Geçersiz days (400 beklenir)
+GET {{Backlog.Api_HostAddress}}/items/stale?days=0
+
+### Tek öğe
+GET {{Backlog.Api_HostAddress}}/items/1
+
+### Yeni öğe
+POST {{Backlog.Api_HostAddress}}/items
+Content-Type: application/json
+
+{
+  "title": "Celeste",
+  "type": "Game",
+  "estimatedMinutes": 600,
+  "genres": ["Platformer"],
+  "moodTags": ["focused"],
+  "priority": 4
+}
+
+### Geçersiz istek (400 beklenir)
+POST {{Backlog.Api_HostAddress}}/items
+Content-Type: application/json
+
+{
+  "title": "",
+  "type": "Game",
+  "priority": 9
+}
+
+### Durum değiştir
+PATCH {{Backlog.Api_HostAddress}}/items/1/status
+Content-Type: application/json
+
+{
+  "status": "Done"
+}
+
+### Sil
+DELETE {{Backlog.Api_HostAddress}}/items/1
